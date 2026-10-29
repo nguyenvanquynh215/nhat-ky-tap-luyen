@@ -101,6 +101,18 @@ git push -u origin main
 
 (File `.env` chứa khóa đã được `.gitignore` chặn — chỉ đẩy `.env.example`.)
 
+## Lưu ý về file icon (assets/*.png)
+
+4 file PNG trong thư mục `assets/` là file nhị phân nên **không đẩy qua
+được bộ kết nối GitHub của Muse** — bản trên GitHub chỉ gồm mã nguồn.
+Khi clone repo về, tạo lại icon bằng 1 lệnh (cần Python + Pillow):
+
+```bash
+pip install pillow && python scripts/make_icons.py
+```
+
+(Các file PNG gốc cũng có sẵn trong file ZIP mã nguồn Muse đã giao.)
+
 ## Công nghệ
 
 Expo SDK 53 · React Native 0.79 · React 19 · TypeScript · Supabase JS v2
