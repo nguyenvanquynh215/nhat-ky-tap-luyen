@@ -92,7 +92,12 @@ create policy "workout_entries_all_own" on public.workout_entries
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
 -- ─── View thống kê theo năm dương lịch (tiện tra cứu trong Dashboard) ───────
-create or replace view public.yearly_stats as
+-- security_invoker = true: view chạy theo quyền của NGƯỜI ĐANG TRUY VẤN nên
+-- RLS của bảng gốc được áp dụng — mỗi người chỉ thấy số liệu của chính mình.
+-- (Nếu thiếu tùy chọn này, Supabase Security Advisor sẽ cảnh báo CRITICAL
+--  "Security Definer View" vì view mặc định chạy theo quyền của người tạo.)
+create or replace view public.yearly_stats
+  with (security_invoker = true) as
 select
   user_id,
   extract(year from workout_date)::int as calendar_year,
