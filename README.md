@@ -59,16 +59,23 @@ cp .env.example .env
    ⚠️ Quan trọng: mỗi lần sửa file `.env`, phải xóa cache khi chạy/build lại
    (`npx expo start -c` hoặc `npx expo export --clear`), nếu không app vẫn
    dùng giá trị cũ đã lưu trong cache của Metro.
-7. Mẫu email: mở **Authentication → Emails / Email Templates → Magic Link**
-   (link trực tiếp: `https://supabase.com/dashboard/project/<ref>/auth/templates`).
-   Template **mặc định của Supabase đã chứa sẵn mã 6 số `{{ .Token }}`** kèm
-   link đăng nhập nên thường không phải sửa gì — chỉ cần mở ra kiểm tra có
-   dòng `{{ .Token }}` là được. Lưu ý: project free tạo từ 06/2026 bị khóa
-   sửa template cho tới khi cấu hình SMTP riêng — không sao, cứ dùng mặc định.
-   Dịch vụ gửi email có sẵn của Supabase chủ yếu giao được tới email của
-   thành viên project (chính email tài khoản Supabase của bạn) — hãy đăng
-   nhập thử lần đầu bằng đúng email đó. Khi cần cho người khác đăng nhập,
-   cấu hình thêm SMTP riêng (ví dụ Resend miễn phí).
+7. Mẫu email OTP — BẮT BUỘC làm bước này thì email mới có MÃ 6 SỐ:
+   Template Magic Link mặc định của project mới **chỉ chứa link đăng nhập,
+   không có mã OTP** (đã kiểm chứng thực tế 29/10/2026), và project free tạo
+   từ 06/2026 bị **khóa sửa template** cho tới khi cấu hình SMTP riêng.
+   Vì vậy hãy làm theo thứ tự:
+   a) Tạo **App Password** cho Gmail của bạn (cần bật xác minh 2 bước):
+      https://myaccount.google.com/apppasswords → tạo, copy mật khẩu 16 ký tự.
+   b) Supabase → **Project Settings → Authentication → SMTP Settings** →
+      bật Custom SMTP: Host `smtp.gmail.com`, Port `465`, Username = Gmail
+      của bạn, Password = App Password vừa tạo, Sender email = Gmail của bạn,
+      Sender name = `Nhật Ký Tập Luyện`. Bấm Save. (Từ lúc này email cũng gửi
+      được cho mọi địa chỉ, không chỉ thành viên project.)
+   c) Mở **Authentication → Emails → Magic Link**
+      (link trực tiếp: `https://supabase.com/dashboard/project/<ref>/auth/templates`)
+      — nay đã sửa được. Đặt Subject: `Mã đăng nhập Nhật Ký Tập Luyện` và
+      thay nội dung bằng mẫu trong file `supabase/email-template-magic-link.html`
+      của repo (có sẵn cả mã `{{ .Token }}` lớn rõ ràng và link dự phòng).
 
 ## 2) Chạy thử bằng Expo Go (Android)
 
