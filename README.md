@@ -56,6 +56,14 @@ cp .env.example .env
 ```
 
 6. Chạy lại app (`npx expo start -c`) — app tự nhận diện và dùng OTP email thật.
+   ⚠️ Quan trọng: mỗi lần sửa file `.env`, phải xóa cache khi chạy/build lại
+   (`npx expo start -c` hoặc `npx expo export --clear`), nếu không app vẫn
+   dùng giá trị cũ đã lưu trong cache của Metro.
+7. Kiểm tra mẫu email có chứa MÃ SỐ: **Authentication → Email Templates →
+   Magic Link** — nội dung email phải có `{{ .Token }}` thì email gửi về mới
+   hiện mã OTP 6 số để nhập trong app (nếu chỉ có link `{{ .ConfirmationURL }}`
+   thì bấm link chỉ đăng nhập được trên web). Thêm dòng này vào template nếu thiếu:
+   `<p>Hoặc nhập mã này trong ứng dụng: <strong>{{ .Token }}</strong></p>`
 
 ## 2) Chạy thử bằng Expo Go (Android)
 
