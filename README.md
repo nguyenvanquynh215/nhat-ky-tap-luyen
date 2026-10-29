@@ -59,11 +59,16 @@ cp .env.example .env
    ⚠️ Quan trọng: mỗi lần sửa file `.env`, phải xóa cache khi chạy/build lại
    (`npx expo start -c` hoặc `npx expo export --clear`), nếu không app vẫn
    dùng giá trị cũ đã lưu trong cache của Metro.
-7. Kiểm tra mẫu email có chứa MÃ SỐ: **Authentication → Email Templates →
-   Magic Link** — nội dung email phải có `{{ .Token }}` thì email gửi về mới
-   hiện mã OTP 6 số để nhập trong app (nếu chỉ có link `{{ .ConfirmationURL }}`
-   thì bấm link chỉ đăng nhập được trên web). Thêm dòng này vào template nếu thiếu:
-   `<p>Hoặc nhập mã này trong ứng dụng: <strong>{{ .Token }}</strong></p>`
+7. Mẫu email: mở **Authentication → Emails / Email Templates → Magic Link**
+   (link trực tiếp: `https://supabase.com/dashboard/project/<ref>/auth/templates`).
+   Template **mặc định của Supabase đã chứa sẵn mã 6 số `{{ .Token }}`** kèm
+   link đăng nhập nên thường không phải sửa gì — chỉ cần mở ra kiểm tra có
+   dòng `{{ .Token }}` là được. Lưu ý: project free tạo từ 06/2026 bị khóa
+   sửa template cho tới khi cấu hình SMTP riêng — không sao, cứ dùng mặc định.
+   Dịch vụ gửi email có sẵn của Supabase chủ yếu giao được tới email của
+   thành viên project (chính email tài khoản Supabase của bạn) — hãy đăng
+   nhập thử lần đầu bằng đúng email đó. Khi cần cho người khác đăng nhập,
+   cấu hình thêm SMTP riêng (ví dụ Resend miễn phí).
 
 ## 2) Chạy thử bằng Expo Go (Android)
 
