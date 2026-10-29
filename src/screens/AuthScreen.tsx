@@ -52,7 +52,8 @@ export default function AuthScreen() {
   const handleVerify = async (value?: string) => {
     const token = (value ?? code).trim();
     setError('');
-    if (token.length !== 6) { setError('Mã OTP gồm 6 số.'); return; }
+    // Supabase cho phép độ dài OTP từ 6–10 số tùy cài đặt project (project mới thường là 8)
+    if (token.length < 6 || token.length > 10) { setError('Mã OTP gồm 6–10 số. Hãy nhập đủ mã trong email.'); return; }
     setBusy(true);
     try {
       await verifyOtp(email, token);
@@ -83,7 +84,7 @@ export default function AuthScreen() {
               <Text style={S.h2}>Đăng nhập bằng email</Text>
               <Text style={[S.muted, { marginTop: 4 }]}>
                 {isRemote
-                  ? 'Nhập email, hệ thống sẽ gửi mã OTP 6 số vào hộp thư của bạn.'
+                  ? 'Nhập email, hệ thống sẽ gửi mã OTP vào hộp thư của bạn.'
                   : 'Chế độ demo: mã OTP sẽ hiện ngay trong app để bạn test thử.'}
               </Text>
               <Text style={S.label}>EMAIL CỦA BẠN</Text>
@@ -110,7 +111,7 @@ export default function AuthScreen() {
             <>
               <Text style={S.h2}>Nhập mã OTP</Text>
               <Text style={[S.muted, { marginTop: 4 }]}>
-                Mã 6 số đã được gửi tới <Text style={{ fontWeight: '700', color: C.ink }}>{email}</Text>.
+                Mã đã được gửi tới <Text style={{ fontWeight: '700', color: C.ink }}>{email}</Text>.
                 Kiểm tra cả mục Spam/Quảng cáo nếu chưa thấy.
               </Text>
 
@@ -124,23 +125,28 @@ export default function AuthScreen() {
                 </View>
               )}
 
-              <Text style={S.label}>MÃ OTP (6 SỐ)</Text>
+              <Text style={S.label}>MÃ OTP TRONG EMAIL</Text>
               <TextInput
-                style={[S.input, local.otpInput]}
-                placeholder="••••••"
+                style={[S.input, local.otpInput, code.length > 6 && { fontSize: 22, letterSpacing: 5 }]}
+                placeholder="••••••••"
                 placeholderTextColor="#C4CFC2"
                 keyboardType="number-pad"
-                maxLength={6}
+                maxLength={10}
                 value={code}
                 onChangeText={(t) => {
-                  const v = t.replace(/\D/g, '').slice(0, 6);
+                  const v = t.replace(/\D/g, '').slice(0, 10);
                   setCode(v);
-                  if (v.length === 6) void handleVerify(v);
+                  // Chế độ demo mã luôn 6 số → tự đăng nhập khi nhập đủ.
+                  // Chế độ thật: độ dài tùy project (6–10 số) → chờ người dùng bấm nút.
+                  if (!isRemote && v.length === 6) void handleVerify(v);
                 }}
               />
+              <Text style={[S.muted, { marginTop: 6, fontSize: 12.5 }]}>
+                Mã có thể dài 6–10 số tùy cài đặt Supabase (project mới thường là 8 số) — nhập đủ mã rồi bấm nút bên dưới.
+              </Text>
               {!!error && <Text style={local.error}>{error}</Text>}
               <View style={{ height: 14 }} />
-              <PrimaryButton title="Vào ứng dụng ✓" onPress={() => handleVerify()} loading={busy} disabled={code.length !== 6} />
+              <PrimaryButton title="Vào ứng dụng ✓" onPress={() => handleVerify()} loading={busy} disabled={code.length < 6} />
               <View style={[S.row, { justifyContent: 'space-between', marginTop: 14 }]}>
                 <Text
                   style={local.link}
