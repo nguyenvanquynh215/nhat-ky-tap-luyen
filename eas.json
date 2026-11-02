@@ -1,1 +1,37 @@
-{"build":{"development":{"developmentClient":true,"distribution":"internal"},"preview":{"android":{"buildType":"apk"},"distribution":"internal"},"production":{"android":{"buildType":"app-bundle"},"autoIncrement":true}},"cli":{"appVersionSource":"remote","version":">= 10.0.0"},"submit":{"production":{}}}
+{
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://ujaufkcpojnuhddslrpc.supabase.co",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqYXVma2Nwb2pudWhkZHNscnBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyODQyMjIsImV4cCI6MjEwODg2MDIyMn0.a0tO_8_0fBxYUAUoSLjdDZAhlue9VFMsm3Oeycoynvk",
+        "EXPO_PUBLIC_APP_WEB_URL": "https://nhat-ky-tap-luyen.pages.dev"
+      }
+    },
+    "production": {
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://ujaufkcpojnuhddslrpc.supabase.co",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqYXVma2Nwb2pudWhkZHNscnBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyODQyMjIsImV4cCI6MjEwODg2MDIyMn0.a0tO_8_0fBxYUAUoSLjdDZAhlue9VFMsm3Oeycoynvk",
+        "EXPO_PUBLIC_APP_WEB_URL": "https://nhat-ky-tap-luyen.pages.dev"
+      }
+    }
+  },
+  "cli": {
+    "appVersionSource": "remote",
+    "version": ">= 10.0.0"
+  },
+  "submit": {
+    "production": {}
+  }
+}
