@@ -1,4 +1,4 @@
-# 🏋️ Nhật Ký Tập Luyện — Fitness Diary
+# 🏋️ Exercise Diary
 
 Ứng dụng ghi nhật ký tập thể dục theo **năm dương lịch**: mỗi buổi tập ghi rõ
 **tập bài gì · bao nhiêu hiệp · mỗi hiệp bao nhiêu cái** (kèm mức tạ nếu có).
@@ -69,11 +69,11 @@ cp .env.example .env
    b) Supabase → **Project Settings → Authentication → SMTP Settings** →
       bật Custom SMTP: Host `smtp.gmail.com`, Port `465`, Username = Gmail
       của bạn, Password = App Password vừa tạo, Sender email = Gmail của bạn,
-      Sender name = `Nhật Ký Tập Luyện`. Bấm Save. (Từ lúc này email cũng gửi
+      Sender name = `Exercise Diary`. Bấm Save. (Từ lúc này email cũng gửi
       được cho mọi địa chỉ, không chỉ thành viên project.)
    c) Mở **Authentication → Emails → Magic Link**
       (link trực tiếp: `https://supabase.com/dashboard/project/<ref>/auth/templates`)
-      — nay đã sửa được. Đặt Subject: `Mã đăng nhập Nhật Ký Tập Luyện` và
+      — nay đã sửa được. Đặt Subject: `Exercise Diary sign-in code` và
       thay nội dung bằng mẫu trong file `supabase/email-template-magic-link.html`
       của repo (có sẵn cả mã `{{ .Token }}` lớn rõ ràng và link dự phòng).
 
@@ -113,7 +113,7 @@ mở link là thấy giao diện web đầy đủ tính năng, không cần cài
 ## 5) Đẩy code lên GitHub
 
 ```bash
-git init && git add . && git commit -m "Nhật Ký Tập Luyện v1.0 — Expo + Supabase OTP"
+git init && git add . && git commit -m "Exercise Diary v1.0 — Expo + Supabase OTP"
 git branch -M main
 git remote add origin https://github.com/nguyenvanquynh215/nhat-ky-tap-luyen.git
 git push -u origin main
