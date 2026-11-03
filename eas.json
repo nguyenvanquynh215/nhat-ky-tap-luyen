@@ -13,7 +13,8 @@
         "EXPO_PUBLIC_SUPABASE_URL": "https://ujaufkcpojnuhddslrpc.supabase.co",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqYXVma2Nwb2pudWhkZHNscnBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyODQyMjIsImV4cCI6MjEwODg2MDIyMn0.a0tO_8_0fBxYUAUoSLjdDZAhlue9VFMsm3Oeycoynvk",
         "EXPO_PUBLIC_APP_WEB_URL": "https://nhat-ky-tap-luyen.pages.dev"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
       "android": {
@@ -24,7 +25,8 @@
         "EXPO_PUBLIC_SUPABASE_URL": "https://ujaufkcpojnuhddslrpc.supabase.co",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqYXVma2Nwb2pudWhkZHNscnBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyODQyMjIsImV4cCI6MjEwODg2MDIyMn0.a0tO_8_0fBxYUAUoSLjdDZAhlue9VFMsm3Oeycoynvk",
         "EXPO_PUBLIC_APP_WEB_URL": "https://nhat-ky-tap-luyen.pages.dev"
-      }
+      },
+      "channel": "production"
     }
   },
   "cli": {

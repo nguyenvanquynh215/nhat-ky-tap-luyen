@@ -49,8 +49,8 @@ export default function ProfileScreen() {
 
   const handleShareApp = async () => {
     await shareText(
-      'Nhật Ký Tập Luyện',
-      `🏋️ Mình đang dùng app Nhật Ký Tập Luyện để ghi số hiệp / số cái mỗi buổi và xem lịch tập cả năm.\nMở link này là dùng ngay trên trình duyệt, không cần tải app:\n${APP_WEB_URL}\n(Cài Android: mở link bằng Expo Go hoặc bản APK trong repo GitHub.)`,
+      'Exercise Diary',
+      `🏋️ Mình đang dùng app Exercise Diary để ghi số hiệp / số cái mỗi buổi và xem lịch tập cả năm.\nMở link này là dùng ngay trên trình duyệt, không cần tải app:\n${APP_WEB_URL}\n(Cài Android: mở link bằng Expo Go hoặc bản APK trong repo GitHub.)`,
     );
   };
 
@@ -212,7 +212,7 @@ export default function ProfileScreen() {
       </View>
 
       <Text style={[S.muted, { textAlign: 'center', marginTop: 8, fontSize: 12.5 }]}>
-        Nhật Ký Tập Luyện v1.0 · Expo + Supabase{'\n'}
+        Exercise Diary v1.1 · Expo + Supabase{'\n'}
         Mã nguồn: GitHub nguyenvanquynh215/nhat-ky-tap-luyen
       </Text>
     </ScrollView>

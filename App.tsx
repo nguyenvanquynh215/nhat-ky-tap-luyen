@@ -12,6 +12,10 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import WorkoutModal from './src/components/WorkoutModal';
 import { C } from './src/components/ui';
 import type { WorkoutEntry } from './src/types';
+import * as WebBrowser from 'expo-web-browser';
+
+// Hoàn tất phiên đăng nhập OAuth (Google/Facebook) khi trình duyệt quay lại app
+WebBrowser.maybeCompleteAuthSession();
 
 type Tab = 'home' | 'calendar' | 'history' | 'stats' | 'profile';
 
@@ -35,7 +39,7 @@ function MainApp() {
       <View style={local.center}>
         <Text style={{ fontSize: 44 }}>🏋️</Text>
         <ActivityIndicator color={C.green} style={{ marginTop: 14 }} />
-        <Text style={{ color: C.sub, marginTop: 8 }}>Đang tải Nhật Ký Tập Luyện…</Text>
+        <Text style={{ color: C.sub, marginTop: 8 }}>Đang tải Exercise Diary…</Text>
       </View>
     );
   }

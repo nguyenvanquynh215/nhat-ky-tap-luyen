@@ -8,17 +8,21 @@
       "package": "com.nguyenvanquynh215.nhatkytapluyen"
     },
     "extra": {
-      "appName": "Nhật Ký Tập Luyện"
+      "appName": "Exercise Diary",
+      "eas": {
+        "projectId": "798fd21a-c407-4220-aeb8-a1b393e33961"
+      }
     },
     "icon": "./assets/icon.png",
     "ios": {
       "bundleIdentifier": "com.nguyenvanquynh215.nhatkytapluyen",
       "supportsTablet": true
     },
-    "name": "Nhật Ký Tập Luyện",
+    "name": "Exercise Diary",
     "orientation": "portrait",
     "plugins": [
-      "expo-asset"
+      "expo-asset",
+      "expo-web-browser"
     ],
     "scheme": "nhatkytapluyen",
     "slug": "nhat-ky-tap-luyen",
@@ -28,17 +32,23 @@
       "resizeMode": "contain"
     },
     "userInterfaceStyle": "light",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "web": {
       "backgroundColor": "#F6F7F4",
       "bundler": "metro",
       "description": "Ghi lại mỗi buổi tập: tập bài gì, bao nhiêu hiệp, mỗi hiệp bao nhiêu cái. Xem lịch nhiệt cả năm dương lịch, thống kê và chuỗi ngày tập. Đăng nhập bằng email + mã OTP, dữ liệu lưu trên Supabase.",
       "favicon": "./assets/favicon.png",
       "lang": "vi",
-      "name": "Nhật Ký Tập Luyện — Theo dõi số hiệp & số cái theo năm",
+      "name": "Exercise Diary — Theo dõi số hiệp & số cái theo năm",
       "output": "single",
       "shortName": "FitLog",
       "themeColor": "#0F5132"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/798fd21a-c407-4220-aeb8-a1b393e33961"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
