@@ -1,1 +1,44 @@
-{"expo":{"android":{"adaptiveIcon":{"backgroundColor":"#0F5132","foregroundImage":"./assets/adaptive-icon.png"},"package":"com.nguyenvanquynh215.nhatkytapluyen"},"extra":{"appName":"Nhật Ký Tập Luyện"},"icon":"./assets/icon.png","ios":{"bundleIdentifier":"com.nguyenvanquynh215.nhatkytapluyen","supportsTablet":true},"name":"Nhật Ký Tập Luyện","orientation":"portrait","plugins":[],"scheme":"nhatkytapluyen","slug":"nhat-ky-tap-luyen","splash":{"backgroundColor":"#0F5132","image":"./assets/splash-icon.png","resizeMode":"contain"},"userInterfaceStyle":"light","version":"1.0.0","web":{"backgroundColor":"#F6F7F4","bundler":"metro","description":"Ghi lại mỗi buổi tập: tập bài gì, bao nhiêu hiệp, mỗi hiệp bao nhiêu cái. Xem lịch nhiệt cả năm dương lịch, thống kê và chuỗi ngày tập. Đăng nhập bằng email + mã OTP, dữ liệu lưu trên Supabase.","favicon":"./assets/favicon.png","lang":"vi","name":"Nhật Ký Tập Luyện — Theo dõi số hiệp & số cái theo năm","output":"single","shortName":"FitLog","themeColor":"#0F5132"}}}
+{
+  "expo": {
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0F5132",
+        "foregroundImage": "./assets/adaptive-icon.png"
+      },
+      "package": "com.nguyenvanquynh215.nhatkytapluyen"
+    },
+    "extra": {
+      "appName": "Nhật Ký Tập Luyện"
+    },
+    "icon": "./assets/icon.png",
+    "ios": {
+      "bundleIdentifier": "com.nguyenvanquynh215.nhatkytapluyen",
+      "supportsTablet": true
+    },
+    "name": "Nhật Ký Tập Luyện",
+    "orientation": "portrait",
+    "plugins": [
+      "expo-asset"
+    ],
+    "scheme": "nhatkytapluyen",
+    "slug": "nhat-ky-tap-luyen",
+    "splash": {
+      "backgroundColor": "#0F5132",
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain"
+    },
+    "userInterfaceStyle": "light",
+    "version": "1.0.0",
+    "web": {
+      "backgroundColor": "#F6F7F4",
+      "bundler": "metro",
+      "description": "Ghi lại mỗi buổi tập: tập bài gì, bao nhiêu hiệp, mỗi hiệp bao nhiêu cái. Xem lịch nhiệt cả năm dương lịch, thống kê và chuỗi ngày tập. Đăng nhập bằng email + mã OTP, dữ liệu lưu trên Supabase.",
+      "favicon": "./assets/favicon.png",
+      "lang": "vi",
+      "name": "Nhật Ký Tập Luyện — Theo dõi số hiệp & số cái theo năm",
+      "output": "single",
+      "shortName": "FitLog",
+      "themeColor": "#0F5132"
+    }
+  }
+}
