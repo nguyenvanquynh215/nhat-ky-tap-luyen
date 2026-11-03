@@ -20,7 +20,10 @@
     },
     "name": "Nhật Ký Tập Luyện",
     "orientation": "portrait",
-    "plugins": [],
+    "plugins": [
+      "expo-asset",
+      "expo-web-browser"
+    ],
     "scheme": "nhatkytapluyen",
     "slug": "nhat-ky-tap-luyen",
     "splash": {
@@ -29,7 +32,7 @@
       "resizeMode": "contain"
     },
     "userInterfaceStyle": "light",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "web": {
       "backgroundColor": "#F6F7F4",
       "bundler": "metro",
@@ -40,6 +43,12 @@
       "output": "single",
       "shortName": "FitLog",
       "themeColor": "#0F5132"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/798fd21a-c407-4220-aeb8-a1b393e33961"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

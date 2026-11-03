@@ -2,6 +2,9 @@ import React, {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
+import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { generateSampleEntries } from '../lib/sampleData';
 import { PRESET_EXERCISES } from '../lib/presets';
@@ -26,6 +29,8 @@ interface AppContextValue {
   /** Gửi mã OTP: Supabase gửi email thật; demo thì trả mã về để hiện trong app */
   sendOtp: (email: string) => Promise<{ demoCode?: string }>;
   verifyOtp: (email: string, code: string) => Promise<void>;
+  /** Đăng nhập bằng Google/Facebook qua Supabase OAuth (cần bật provider trên Supabase) */
+  signInWithProvider: (provider: 'google' | 'facebook') => Promise<void>;
   signOut: () => Promise<void>;
   addEntry: (e: Omit<WorkoutEntry, 'id'> & { id?: string }) => Promise<void>;
   updateEntry: (e: WorkoutEntry) => Promise<void>;
@@ -192,6 +197,64 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     await loadEntries(info);
   }, [isRemote, loadEntries]);
 
+  const signInWithProvider = useCallback(async (provider: 'google' | 'facebook') => {
+    if (!isRemote || !supabase) {
+      throw new Error('Đăng nhập bằng Google/Facebook cần Supabase thật — chế độ demo chỉ dùng email + OTP.');
+    }
+    const label = provider === 'google' ? 'Google' : 'Facebook';
+    const redirectTo = Linking.createURL('auth-callback');
+
+    // Trên web: Supabase tự chuyển hướng cả trang tới nhà cung cấp
+    if (Platform.OS === 'web') {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: { redirectTo: window.location.origin },
+      });
+      if (error) throw error;
+      return;
+    }
+
+    // Trên app: mở trình duyệt trong app, chờ quay lại bằng deep link
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo, skipBrowserRedirect: true },
+    });
+    if (error) throw error;
+    if (!data?.url) throw new Error(`Không lấy được đường dẫn đăng nhập ${label}.`);
+
+    const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
+    if (result.type !== 'success') {
+      // Người dùng tự đóng trình duyệt → không coi là lỗi
+      throw Object.assign(new Error('cancelled'), { code: 'AUTH_CANCELLED' });
+    }
+
+    const returned = result.url;
+    const params = new URLSearchParams(returned.split('?')[1]?.split('#')[0] ?? '');
+    const errText = params.get('error_description') || params.get('error');
+    if (errText) {
+      if (/not enabled|unsupported provider/i.test(errText)) {
+        throw new Error(`Đăng nhập ${label} chưa được bật trên Supabase. Cần cấu hình provider ${label} trong Supabase Dashboard rồi thử lại.`);
+      }
+      throw new Error(errText);
+    }
+    const code = params.get('code');
+    if (code) {
+      const { error: exError } = await supabase.auth.exchangeCodeForSession(code);
+      if (exError) throw exError;
+      return;
+    }
+    // Dự phòng: token nằm ở phần #fragment (flow implicit)
+    const frag = new URLSearchParams(returned.split('#')[1] ?? '');
+    const access_token = frag.get('access_token');
+    const refresh_token = frag.get('refresh_token');
+    if (access_token && refresh_token) {
+      const { error: sError } = await supabase.auth.setSession({ access_token, refresh_token });
+      if (sError) throw sError;
+      return;
+    }
+    throw new Error(`Đăng nhập ${label} chưa hoàn tất. Thử lại nhé.`);
+  }, [isRemote]);
+
   const signOut = useCallback(async () => {
     if (isRemote && supabase) await supabase.auth.signOut();
     await AsyncStorage.removeItem(K.demoUser);
@@ -319,6 +382,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     exercises: [...PRESET_EXERCISES, ...customExercises],
     sendOtp,
     verifyOtp,
+    signInWithProvider,
     signOut,
     addEntry,
     updateEntry,
@@ -327,7 +391,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     clearAllData,
     importEntries,
     refresh,
-  }), [ready, user, isRemote, entries, customExercises, sendOtp, verifyOtp, signOut,
+  }), [ready, user, isRemote, entries, customExercises, sendOtp, verifyOtp, signInWithProvider, signOut,
     addEntry, updateEntry, deleteEntry, addCustomExercise, clearAllData, importEntries, refresh]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

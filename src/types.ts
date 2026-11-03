@@ -1,4 +1,4 @@
-// ─── Kiểu dữ liệu cốt lõi của Nhật Ký Tập Luyện ─────────────────────────────
+// ─── Kiểu dữ liệu cốt lõi của Exercise Diary ─────────────────────────────
 
 /** Một hiệp tập: hiệp thứ mấy, bao nhiêu cái, mức tạ (kg, tùy chọn) */
 export interface WorkoutSet {

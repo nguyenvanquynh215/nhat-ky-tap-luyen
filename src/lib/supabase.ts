@@ -21,6 +21,8 @@ export const supabase: SupabaseClient | null = isSupabaseConfigured
         storage: AsyncStorage,
         autoRefreshToken: true,
         persistSession: true,
+        // PKCE: dùng cho đăng nhập Google/Facebook (OAuth) qua deep link
+        flowType: 'pkce',
         // Trên web: cho phép mở link đăng nhập (magic link) từ email
         detectSessionInUrl: true,
       },

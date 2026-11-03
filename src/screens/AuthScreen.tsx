@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View,
+  KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View,
 } from 'react-native';
 import { useApp } from '../context/AppContext';
 import { C, PrimaryButton, styles as S } from '../components/ui';
@@ -8,7 +8,8 @@ import { C, PrimaryButton, styles as S } from '../components/ui';
 type Step = 'email' | 'otp';
 
 export default function AuthScreen() {
-  const { sendOtp, verifyOtp, isRemote } = useApp();
+  const { sendOtp, verifyOtp, signInWithProvider, isRemote } = useApp();
+  const [socialBusy, setSocialBusy] = useState<'google' | 'facebook' | null>(null);
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
@@ -64,6 +65,19 @@ export default function AuthScreen() {
     }
   };
 
+  const handleSocial = async (provider: 'google' | 'facebook') => {
+    setError('');
+    setSocialBusy(provider);
+    try {
+      await signInWithProvider(provider);
+    } catch (e: any) {
+      if ((e as any)?.code === 'AUTH_CANCELLED') return;
+      setError(e?.message || 'Đăng nhập chưa thành công. Thử lại sau nhé.');
+    } finally {
+      setSocialBusy(null);
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: C.bg }}
@@ -73,7 +87,7 @@ export default function AuthScreen() {
         <View style={local.logoBox}>
           <Text style={local.logoIcon}>🏋️</Text>
         </View>
-        <Text style={local.appName}>Nhật Ký Tập Luyện</Text>
+        <Text style={local.appName}>Exercise Diary</Text>
         <Text style={[S.muted, { textAlign: 'center', marginTop: 6 }]}>
           Ghi lại mỗi buổi tập: tập bài gì, bao nhiêu hiệp,{'\n'}mỗi hiệp bao nhiêu cái — theo năm dương lịch.
         </Text>
@@ -106,6 +120,33 @@ export default function AuthScreen() {
               <Text style={[S.muted, { marginTop: 12, fontSize: 12.5 }]}>
                 Chưa có tài khoản? Cứ nhập email — tài khoản sẽ được tạo tự động khi bạn nhập đúng mã OTP lần đầu.
               </Text>
+
+              <View style={local.dividerRow}>
+                <View style={local.dividerLine} />
+                <Text style={local.dividerText}>hoặc</Text>
+                <View style={local.dividerLine} />
+              </View>
+              <TouchableOpacity
+                style={[local.socialBtn, local.googleBtn]}
+                onPress={() => handleSocial('google')}
+                disabled={socialBusy !== null}
+                activeOpacity={0.85}
+              >
+                <Text style={[local.socialText, { color: '#1F1F1F' }]}>
+                  {socialBusy === 'google' ? 'Đang mở Google…' : '🔑 Đăng nhập bằng Google'}
+                </Text>
+              </TouchableOpacity>
+              <View style={{ height: 10 }} />
+              <TouchableOpacity
+                style={[local.socialBtn, local.facebookBtn]}
+                onPress={() => handleSocial('facebook')}
+                disabled={socialBusy !== null}
+                activeOpacity={0.85}
+              >
+                <Text style={[local.socialText, { color: '#FFFFFF' }]}>
+                  {socialBusy === 'facebook' ? 'Đang mở Facebook…' : 'Đăng nhập bằng Facebook'}
+                </Text>
+              </TouchableOpacity>
             </>
           ) : (
             <>
@@ -197,4 +238,14 @@ const local = StyleSheet.create({
   },
   error: { color: C.red, fontSize: 13.5, marginTop: 10, lineHeight: 18 },
   link: { color: C.green, fontWeight: '700', fontSize: 14, paddingVertical: 4 },
+  dividerRow: { flexDirection: 'row', alignItems: 'center', marginTop: 18, marginBottom: 14 },
+  dividerLine: { flex: 1, height: 1, backgroundColor: '#D8DED4' },
+  dividerText: { marginHorizontal: 10, color: C.sub, fontSize: 12.5 },
+  socialBtn: {
+    borderRadius: 12, paddingVertical: 13, paddingHorizontal: 14,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  googleBtn: { backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#D8DED4' },
+  facebookBtn: { backgroundColor: '#1877F2' },
+  socialText: { fontSize: 15, fontWeight: '700' },
 });
